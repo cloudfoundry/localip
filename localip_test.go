@@ -3,7 +3,7 @@ package localip_test
 import (
 	"net"
 
-	"github.com/pivotal-golang/localip"
+	"code.cloudfoundry.org/localip"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
