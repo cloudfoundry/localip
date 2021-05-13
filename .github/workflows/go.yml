@@ -13,10 +13,18 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: get Go version
+      run: |
+        GOVER=$(cat go.mod | grep "^go" | cut -d ' ' -f 2)
+        echo "{\"version\": \"${GOVER}\"}" > go-version
+    - name: print go version
+      run: |
+        echo ${{fromJson(go-version.version)}}
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
-        go-version: 1.16
+        # go-version: 1.16
+        go-version: ${fromJson(go-version.version)}
 
     - name: Build
       run: go build -v ./...
