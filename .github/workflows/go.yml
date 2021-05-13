@@ -15,16 +15,18 @@ jobs:
 
     - name: get Go version
       run: |
-        GOVER=$(cat go.mod | grep "^go" | cut -d ' ' -f 2)
-        echo "{\"version\": \"${GOVER}\"}" > go-version
+        go_version=$(cat go.mod | grep "^go" | cut -d ' ' -f 2)
+        echo "go_version=${go_version}" >> $GITHUB_ENV
     - name: print go version
       run: |
-        echo ${{fromJson(go-version.version)}}
+        echo ${{ env.go_version }}
+        
+
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
         # go-version: 1.16
-        go-version: ${fromJson(go-version.version)}
+        go-version: ${{ env.go_version }}
 
     - name: Build
       run: go build -v ./...
